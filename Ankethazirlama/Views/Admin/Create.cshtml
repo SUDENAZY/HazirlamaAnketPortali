@@ -1,0 +1,17 @@
+﻿@model Ankethazirlama.Models.Survey
+
+<h2>Yeni Anket Ekle</h2>
+
+<form method="post" action="/Admin/Create">
+    <div>
+        <label>Başlık:</label>
+        <input type="text" name="Title" value="@Model?.Title" required />
+    </div>
+    <div>
+        <label>Açıklama:</label>
+        <textarea name="Description" required>@Model?.Description</textarea>
+    </div>
+    <button type="submit">Kaydet</button>
+</form>
+
+<a href="/Admin/Index">Geri Dön</a>

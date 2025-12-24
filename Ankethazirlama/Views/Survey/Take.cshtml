@@ -1,0 +1,27 @@
+﻿@model Ankethazirlama.Models.Survey
+
+<div class="container mt-4">
+    <h2>@Model.Title</h2>
+    <p>@Model.Description</p>
+
+    <form asp-action="SubmitSurvey" method="post">
+        <input type="hidden" name="SurveyId" value="@Model.Id" />
+
+        @foreach (var question in Model.Questions)
+        {
+            <div class="mt-3">
+                <label><b>@question.Text</b></label>
+
+                @foreach (var option in question.Options)
+                {
+                    <div>
+                        <input type="radio" name="Question_@question.Id" value="@option.Id" required />
+                        @option.Text
+                    </div>
+                }
+            </div>
+        }
+
+        <button class="btn btn-success mt-4">Anketi Gönder</button>
+    </form>
+</div>

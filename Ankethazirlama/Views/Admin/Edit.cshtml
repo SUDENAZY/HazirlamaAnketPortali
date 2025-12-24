@@ -1,0 +1,21 @@
+﻿@model Ankethazirlama.Models.Survey
+
+<h2>Anket Düzenle</h2>
+
+<form method="post" action="/Admin/Edit">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label>Başlık:</label>
+        <input type="text" name="Title" value="@Model.Title" required />
+    </div>
+
+    <div>
+        <label>Açıklama:</label>
+        <textarea name="Description" required>@Model.Description</textarea>
+    </div>
+
+    <button type="submit">Güncelle</button>
+</form>
+
+<a href="/Admin/Index">Geri Dön</a>

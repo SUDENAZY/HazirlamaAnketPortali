@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Ankethazirlama.Models.Survey>
+
+<h2>Anketler</h2>
+
+<a href="/Admin/Create">Yeni Anket Ekle</a> |
+<a href="/Admin/Logout">Çıkış Yap</a>
+
+<table class="table">
+    <tr>
+        <th>Başlık</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var s in Model)
+    {
+        <tr id="row-@s.Id">
+            <td>@s.Title</td>
+            <td>@s.Description</td>
+            <td>@s.CreatedDate.ToShortDateString()</td>
+            <td>
+                <a href="/Admin/Edit/@s.Id">Düzenle</a> |
+                <a href="javascript:void(0)" onclick="deleteSurvey(@s.Id)">Sil</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deleteSurvey(id){
+            if(confirm("Bu anketi silmek istediğinize emin misiniz?")){
+                $.ajax({
+                    url: '/Admin/Delete/' + id,
+                    type: 'POST',
+                    success: function(){
+                        alert('Anket silindi!');
+                        $("#row-" + id).remove(); // sayfa yenilenmeden satırı kaldır
+                    },
+                    error: function(){
+                        alert('Hata oluştu!');
+                    }
+                });
+            }
+        }
+    </script>
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/anketHub")
+        .build();
+
+    connection.start()
+        .then(() => console.log("SignalR Bağlandı"))
+        .catch(err => console.error(err));
+</script>
